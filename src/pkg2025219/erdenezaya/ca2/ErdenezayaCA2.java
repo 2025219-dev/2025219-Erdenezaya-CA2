@@ -41,37 +41,24 @@ public class ErdenezayaCA2 {
         }
     }
 
-     // Read the file and return names as array
-    public static String[] loadNamesFromFile(String filename) {
-        ArrayList<String> names = new ArrayList<>();
-
-        try (BufferedReader br = new BufferedReader(new FileReader(filename))) {
-
-            String line;
-            boolean skipHeader = true;
-
-            while ((line = br.readLine()) != null) {
-
-                // Skip the first header line
-                if (skipHeader) {
-                    skipHeader = false;
-                    continue;
-                }
-
-                // Split CSV line
-                String[] parts = line.split(",");
-
-                if (parts.length >= 1) {
-                    names.add(parts[0]);   // only the Name column
-                }
+    // Load full records (for search)
+public static String[] loadFullRecordsFromFile(String filename) {
+    ArrayList<String> records = new ArrayList<>();
+    try (BufferedReader br = new BufferedReader(new FileReader(filename))) {
+        String line;
+        boolean skipHeader = true;
+        while ((line = br.readLine()) != null) {
+            if (skipHeader) {
+                skipHeader = false;
+                continue;
             }
-
-        } catch (IOException e) {
-            System.out.println("Error reading file: " + e.getMessage());
+            records.add(line); // full line: Name,Manager,Department
         }
-
-        return names.toArray(new String[0]);
+    } catch (IOException e) {
+        System.out.println("Error reading file: " + e.getMessage());
     }
+    return records.toArray(new String[0]);
+}
 
     
     /**
@@ -101,7 +88,7 @@ public class ErdenezayaCA2 {
                     System.out.print("Enter the filename (with extension, e.g., records.txt): ");
                     String filename = scanner.nextLine();
 
-                    String[] names = loadNamesFromFile(filename);
+                    String[] names = loadFullRecordsFromFile(filename);
 
                     if (names.length == 0) {
                         System.out.println("No names found in file.");
@@ -119,7 +106,38 @@ public class ErdenezayaCA2 {
                     break;
                 case 2:
                     
-                    System.out.println("under construction");
+                    // --- SEARCH NAME IN FILE ---
+                    System.out.print("Enter the filename (with extension, e.g., records.txt): ");
+                    String filenameSearch = scanner.nextLine();
+
+                    String[] fullRecords = loadFullRecordsFromFile(filenameSearch);
+
+                    if (fullRecords.length == 0) {
+                        System.out.println("No names found in file or file could not be read.");
+                        break;
+                    }
+
+                    System.out.print("Enter the name to search: ");
+                    String key = scanner.nextLine();
+                    
+                    // Extract names for linear search
+                    String[] namesArray = new String[fullRecords.length];
+                    for (int i = 0; i < fullRecords.length; i++) {
+                        namesArray[i] = fullRecords[i].split(",")[0]; // Name column
+                    }
+
+                    int index = linearSearch(namesArray, key);
+
+                    if (index != -1) {
+                        // Name found — print full record
+                        String[] parts = fullRecords[index].split(",");
+                        System.out.println("\nRecord Found:");
+                        System.out.println("Name: " + parts[0]);
+                        System.out.println("Manager: " + parts[1]);
+                        System.out.println("Department: " + parts[2]);
+                    } else {
+                        System.out.println("Name not found in file.");
+                    }
                     break;
                 case 3:
                     System.out.println("under construction");
