@@ -23,6 +23,6 @@ Lucas Donnelly,Timothy Collins,IT
 Isla Sheridan,Michael Byrne,Mathematics
 Patrick Keogh,Raymond Cooper,Finance
 Ruby Donnelly,Sandra Lynch,Student Services
-Dr. Nora Higgins,,Principal
+Nora Higgins,,Principal
 Niamh Kelly,Sophie McMahon,Human Resources
 Aaron Fitzgerald,Sandra Lynch,Student Services

@@ -87,26 +87,24 @@ public class ErdenezayaCA2 {
 
             switch (choice) {
                 case 1:
-                    // --- SORTING NAMES ---
-                    System.out.print("How many names do you want to sort? ");
-                    int count = scanner.nextInt();
-                    scanner.nextLine(); 
+                     // --- SORT NAMES FROM FILE ---
+                    System.out.print("Enter the filename (with extension, e.g., records.txt): ");
+                    String filename = scanner.nextLine();
 
-                    String[] names = new String[count];
+                    String[] names = loadNamesFromFile(filename);
 
-                    System.out.println("Enter the names:");
-                    for (int i = 0; i < count; i++) {
-                        System.out.print("Name " + (i + 1) + ": ");
-                        names[i] = scanner.nextLine();
+                    if (names.length == 0) {
+                        System.out.println("No names found in file.");
+                        break;
                     }
 
-                    // Sort the names
+                    // Sort names
                     bubbleSort(names);
 
-                    // Print the sorted list
-                    System.out.println("\nSorted Names:");
-                    for (String name : names) {
-                        System.out.println(name);
+                    // Print sorted list
+                    System.out.println("\nSorted Names from File:");
+                    for (String n : names) {
+                        System.out.println(n);
                     }
                     break;
                 case 2:
