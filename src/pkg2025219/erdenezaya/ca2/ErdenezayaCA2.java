@@ -11,6 +11,21 @@ import java.util.Scanner;
  * @author Erdenezaya
  */
 public class ErdenezayaCA2 {
+    
+    // BubbleSort for String array
+    public static void bubbleSort(String[] A) {
+        int n = A.length;
+
+        for (int i = 0; i < n - 1; i++) {
+            for (int j = 0; j < n - 1; j++) {
+                if (A[j].compareToIgnoreCase(A[j + 1]) > 0) {
+                    String temp = A[j];
+                    A[j] = A[j + 1];
+                    A[j + 1] = temp;
+                }
+            }
+        }
+    }
 
     /**
      * @param args the command line arguments
@@ -35,7 +50,7 @@ public class ErdenezayaCA2 {
 
             switch (choice) {
                 case 1:
-                    System.out.println("under construction");
+                    
                     break;
                 case 2:
                     
