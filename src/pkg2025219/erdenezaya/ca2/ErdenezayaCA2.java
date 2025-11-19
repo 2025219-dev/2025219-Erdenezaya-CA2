@@ -5,6 +5,10 @@
 package pkg2025219.erdenezaya.ca2;
 
 import java.util.Scanner;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
 
 /**
  *
@@ -27,6 +31,39 @@ public class ErdenezayaCA2 {
         }
     }
 
+     // Read the file and return names as array
+    public static String[] loadNamesFromFile(String filename) {
+        ArrayList<String> names = new ArrayList<>();
+
+        try (BufferedReader br = new BufferedReader(new FileReader(filename))) {
+
+            String line;
+            boolean skipHeader = true;
+
+            while ((line = br.readLine()) != null) {
+
+                // Skip the first header line
+                if (skipHeader) {
+                    skipHeader = false;
+                    continue;
+                }
+
+                // Split CSV line
+                String[] parts = line.split(",");
+
+                if (parts.length >= 1) {
+                    names.add(parts[0]);   // only the Name column
+                }
+            }
+
+        } catch (IOException e) {
+            System.out.println("Error reading file: " + e.getMessage());
+        }
+
+        return names.toArray(new String[0]);
+    }
+
+    
     /**
      * @param args the command line arguments
      */

@@ -1,0 +1,28 @@
+Name,Manager,Department
+Grace O’Connor,Michael Byrne,Mathematics
+Jacob Stewart,Michael Byrne,Mathematics
+Ava Murphy,Sandra Lynch,Student Services
+Leo Bennett,Sandra Lynch,Student Services
+Ella Fitzgerald,Raymond Cooper,Finance
+Oscar Doyle,Raymond Cooper,Finance
+Hannah Keane,Sophie McMahon,Human Resources
+Caleb O’Reilly,Sophie McMahon,Human Resources
+Chloe Walsh,Timothy Collins,IT
+Ryan Gallagher,Timothy Collins,IT
+Zoe Brennan,Timothy Collins,IT
+Ethan Fitzpatrick,Michael Byrne,Mathematics
+Michael Byrne,Dr. Nora Higgins,Mathematics
+Sophie McMahon,Dr. Nora Higgins,Human Resources
+Sandra Lynch,Dr. Nora Higgins,Student Services
+Raymond Cooper,Dr. Nora Higgins,Finance
+Timothy Collins,Dr. Nora Higgins,IT
+Lily Connors,Raymond Cooper,Finance
+Samuel Harding,Sandra Lynch,Student Services
+Maya Byrne,Sophie McMahon,Human Resources
+Lucas Donnelly,Timothy Collins,IT
+Isla Sheridan,Michael Byrne,Mathematics
+Patrick Keogh,Raymond Cooper,Finance
+Ruby Donnelly,Sandra Lynch,Student Services
+Dr. Nora Higgins,,Principal
+Niamh Kelly,Sophie McMahon,Human Resources
+Aaron Fitzgerald,Sandra Lynch,Student Services
