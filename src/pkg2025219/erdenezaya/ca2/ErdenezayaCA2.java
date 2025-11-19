@@ -16,6 +16,16 @@ import java.util.ArrayList;
  */
 public class ErdenezayaCA2 {
     
+    // Linear Search for String array (case-insensitive)
+    public static int linearSearch(String[] arr, String key) {
+        for (int i = 0; i < arr.length; i++) {
+            if (arr[i].equalsIgnoreCase(key)) {
+                return i; // return index if found
+            }
+        }
+        return -1; // not found
+    }
+    
     // BubbleSort for String array
     public static void bubbleSort(String[] A) {
         int n = A.length;
