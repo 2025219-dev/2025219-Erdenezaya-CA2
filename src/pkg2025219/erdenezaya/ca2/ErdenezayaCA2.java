@@ -50,7 +50,27 @@ public class ErdenezayaCA2 {
 
             switch (choice) {
                 case 1:
-                    
+                    // --- SORTING NAMES ---
+                    System.out.print("How many names do you want to sort? ");
+                    int count = scanner.nextInt();
+                    scanner.nextLine(); 
+
+                    String[] names = new String[count];
+
+                    System.out.println("Enter the names:");
+                    for (int i = 0; i < count; i++) {
+                        System.out.print("Name " + (i + 1) + ": ");
+                        names[i] = scanner.nextLine();
+                    }
+
+                    // Sort the names
+                    bubbleSort(names);
+
+                    // Print the sorted list
+                    System.out.println("\nSorted Names:");
+                    for (String name : names) {
+                        System.out.println(name);
+                    }
                     break;
                 case 2:
                     
