@@ -18,32 +18,47 @@ import java.util.ArrayList;
  */
 public class ErdenezayaCA2 {
     
-    // Linear Search for String array (case-insensitive)
+// ---------------------------------------------------------------
+    // LINEAR SEARCH FUNCTION
+    // Searches for a name inside a String array (case-insensitive).
+    // Returns the index if found, otherwise returns -1.
+    // ---------------------------------------------------------------
     public static int linearSearch(String[] arr, String key) {
         for (int i = 0; i < arr.length; i++) {
-            if (arr[i].equalsIgnoreCase(key)) {
+            if (arr[i].equalsIgnoreCase(key)) { // Case-insensitive comparison
                 return i; // return index if found
             }
         }
         return -1; // not found
     }
     
-    
+        // ---------------------------------------------------------------
+    // FUNCTION: Compute the height of a Binary Search Tree (BST)
+    // Height = # of levels in the tree
+    // Empty tree has height = 0
+    // ---------------------------------------------------------------
     static int height(Node root) {
     if (root == null) return 0;
 
-    int leftH = height(root.left);
-    int rightH = height(root.right);
+    int leftH = height(root.left);   // Height of left subtree
+    int rightH = height(root.right); // Height of right subtree
 
-    return 1 + Math.max(leftH, rightH);
+
+    return 1 + Math.max(leftH, rightH); // Root counts as +1
 }
     
+    
+// ---------------------------------------------------------------
+    // BUBBLE SORT FOR STRINGS (case-insensitive)
+    // Sorts all names alphabetically
+    // ---------------------------------------------------------------
     // BubbleSort for String array
     public static void bubbleSort(String[] A) {
         int n = A.length;
 
-        for (int i = 0; i < n - 1; i++) {
-            for (int j = 0; j < n - 1; j++) {
+        for (int i = 0; i < n - 1; i++) {  // Outer loop
+            for (int j = 0; j < n - 1; j++) { // Inner loop
+                // If A[j] > A[j+1], swap them
                 if (A[j].compareToIgnoreCase(A[j + 1]) > 0) {
                     String temp = A[j];
                     A[j] = A[j + 1];
@@ -53,6 +68,12 @@ public class ErdenezayaCA2 {
         }
     }
 
+  // ---------------------------------------------------------------
+    // READ FULL RECORDS FROM A FILE
+    // Each row format: Name,Manager,Department
+    // Skips header line
+    // Returns full lines as an array of strings
+    // ---------------------------------------------------------------  
     // Load full records (for search)
 public static String[] loadFullRecordsFromFile(String filename) {
     ArrayList<String> records = new ArrayList<>();
@@ -60,11 +81,11 @@ public static String[] loadFullRecordsFromFile(String filename) {
         String line;
         boolean skipHeader = true;
         while ((line = br.readLine()) != null) {
-            if (skipHeader) {
+            if (skipHeader) {  // Ignore first line
                 skipHeader = false;
                 continue;
             }
-            records.add(line); // full line: Name,Manager,Department
+            records.add(line);  // Add full line to list
         }
     } catch (IOException e) {
         System.out.println("Error reading file: " + e.getMessage());
@@ -72,9 +93,13 @@ public static String[] loadFullRecordsFromFile(String filename) {
     return records.toArray(new String[0]);
 }
 
-// ======================= BINARY SEARCH TREE + BFS =======================
 
-// Node that stores a String (Name)
+ // ---------------------------------------------------------------
+    // BINARY TREE SECTION
+    // ---------------------------------------------------------------
+
+    // Node class for BST (stores a name as the data)
+
     static class Node {
         String data;
         Node left, right;
@@ -85,7 +110,11 @@ public static String[] loadFullRecordsFromFile(String filename) {
         }
     }
 
-    // Insert into BST (alphabetical order)
+    // ---------------------------------------------------------------
+    // FUNCTION: Insert a name into the Binary Search Tree alphabetically
+    // Left subtree: smaller names
+    // Right subtree: larger names
+    // ---------------------------------------------------------------
     static Node insert(Node root, String value) {
         if (root == null) {
             return new Node(value);
@@ -98,13 +127,19 @@ public static String[] loadFullRecordsFromFile(String filename) {
         return root;
     }
 
-    // Count nodes for BFS Queue size
+   // ---------------------------------------------------------------
+    // FUNCTION: Count number of nodes in the tree
+    // Used to size the queue for BFS
+    // --------------------------------------------------------------- 
         static int countNodes(Node root) {
             if (root == null) return 0;
             return 1 + countNodes(root.left) + countNodes(root.right);
         }
 
-    // Queue for BFS
+     // ---------------------------------------------------------------
+    // ARRAY-BASED QUEUE (for BFS traversal)
+    // Simple circular queue storing Node objects
+    // ---------------------------------------------------------------
     static class ArrayQueue {
         Node[] arr;
         int front, rear, capacity;
@@ -122,20 +157,23 @@ public static String[] loadFullRecordsFromFile(String filename) {
         void enqueue(Node node) {
             if (isFull()) return;
             if (isEmpty()) front = rear = 0;
-            else rear = (rear + 1) % capacity;
+            else rear = (rear + 1) % capacity; // circular increment
             arr[rear] = node;
         }
 
         Node dequeue() {
             if (isEmpty()) return null;
             Node temp = arr[front];
-            if (front == rear) front = rear = -1;
+            if (front == rear) front = rear = -1;  // queue becomes empty
             else front = (front + 1) % capacity;
             return temp;
         }
     }
 
-    // BFS Traversal
+    // ---------------------------------------------------------------
+    // BFS TRAVERSAL (Level Order)
+    // Prints each name on a new line
+    // ---------------------------------------------------------------
     static void bfs(Node root) {
         if (root == null) {
             System.out.println("Tree is empty.");
@@ -150,17 +188,18 @@ public static String[] loadFullRecordsFromFile(String filename) {
 
         while (!queue.isEmpty()) {
             Node current = queue.dequeue();
+         // Print on its own line     
             System.out.println(current.data + " ");
-
+          // Add left + right children
             if (current.left != null) queue.enqueue(current.left);
             if (current.right != null) queue.enqueue(current.right);
         }
         System.out.println("\n");
     }
 
-    /**
-     * @param args the command line arguments
-     */
+   // ---------------------------------------------------------------
+    // MAIN PROGRAM + MENU
+    // --------------------------------------------------------------- 
     public static void main(String[] args) {
         
         Scanner scanner = new Scanner(System.in);
@@ -175,11 +214,16 @@ public static String[] loadFullRecordsFromFile(String filename) {
             System.out.print("Enter your choice: ");
             
             int choice = scanner.nextInt();
-            scanner.nextLine();
+            scanner.nextLine(); // Clear newline
 
             
 
             switch (choice) {
+                
+                
+                // -------------------------
+                // OPTION 1: SORT
+                // -------------------------
                 case 1:
                      // --- SORT NAMES FROM FILE ---
                     System.out.print("Enter the filename (with extension, e.g., records.txt): ");
@@ -201,6 +245,10 @@ public static String[] loadFullRecordsFromFile(String filename) {
                         System.out.println(n);
                     }
                     break;
+                    
+                    // -------------------------
+                   // OPTION 2: SEARCH
+                  // -------------------------
                 case 2:
                     
                     // --- SEARCH NAME IN FILE ---
@@ -216,6 +264,8 @@ public static String[] loadFullRecordsFromFile(String filename) {
 
                     System.out.print("Enter the name to search: ");
                     String key = scanner.nextLine();
+                    
+                    // Extract only name column
                     
                     // Extract names for linear search
                     String[] namesArray = new String[fullRecords.length];
@@ -236,6 +286,9 @@ public static String[] loadFullRecordsFromFile(String filename) {
                         System.out.println("Name not found in file.");
                     }
                     break;
+                       // -------------------------
+                      // OPTION 3: ADD NEW RECORD
+                     // -------------------------
                 case 3:
                         System.out.print("Enter the filename to add record to (with extension, e.g., records.txt): ");
                         String filenameAdd = scanner.nextLine();
@@ -258,6 +311,10 @@ public static String[] loadFullRecordsFromFile(String filename) {
                             System.out.println("Error writing to file: " + e.getMessage());
                         }
                     break;
+                    
+                    // -------------------------
+                   // OPTION 4: BUILD TREE + BFS
+                  // -------------------------
                 case 4:
                     System.out.println("\n--- Create Binary Tree from File (Names Only) ---");
                     System.out.print("Enter filename (with extension): ");
@@ -270,7 +327,7 @@ public static String[] loadFullRecordsFromFile(String filename) {
                         break;
                     }
 
-                    // Build BST from Names (first column)
+                    // Build binary search tree
                     Node rootTree = null;
                     for (String rec : recordsForTree) {
                         String name = rec.split(",")[0].trim();
@@ -287,6 +344,10 @@ public static String[] loadFullRecordsFromFile(String filename) {
                     System.out.println("Height of tree: " + h);
 
                     break;
+                    
+                    // -------------------------
+                   // EXIT PROGRAM
+                  // ------------------------- 
                 case 5:
                     // Exit the program
                     System.out.println("Exiting program.");
