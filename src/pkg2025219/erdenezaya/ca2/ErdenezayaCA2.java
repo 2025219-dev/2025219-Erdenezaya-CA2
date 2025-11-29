@@ -7,7 +7,9 @@ package pkg2025219.erdenezaya.ca2;
 import java.util.Scanner;
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 
 /**
@@ -140,7 +142,26 @@ public static String[] loadFullRecordsFromFile(String filename) {
                     }
                     break;
                 case 3:
-                    System.out.println("under construction");
+                        System.out.print("Enter the filename to add record to (with extension, e.g., records.txt): ");
+                        String filenameAdd = scanner.nextLine();
+
+                        System.out.print("Enter Name: ");
+                        String newName = scanner.nextLine();
+
+                        System.out.print("Enter Manager: ");
+                        String newManager = scanner.nextLine();
+
+                        System.out.print("Enter Department: ");
+                        String newDepartment = scanner.nextLine();
+
+                        try (FileWriter fw = new FileWriter(filenameAdd, true); 
+                             PrintWriter pw = new PrintWriter(fw)) {
+                            // Append new record in CSV format
+                            pw.println(newName + "," + newManager + "," + newDepartment);
+                            System.out.println("Record added successfully!");
+                        } catch (IOException e) {
+                            System.out.println("Error writing to file: " + e.getMessage());
+                        }
                     break;
                 case 4:
                     System.out.println("under construction");
