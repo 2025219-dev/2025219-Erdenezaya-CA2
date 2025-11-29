@@ -28,6 +28,16 @@ public class ErdenezayaCA2 {
         return -1; // not found
     }
     
+    
+    static int height(Node root) {
+    if (root == null) return 0;
+
+    int leftH = height(root.left);
+    int rightH = height(root.right);
+
+    return 1 + Math.max(leftH, rightH);
+}
+    
     // BubbleSort for String array
     public static void bubbleSort(String[] A) {
         int n = A.length;
@@ -62,7 +72,92 @@ public static String[] loadFullRecordsFromFile(String filename) {
     return records.toArray(new String[0]);
 }
 
-    
+// ======================= BINARY SEARCH TREE + BFS =======================
+
+// Node that stores a String (Name)
+    static class Node {
+        String data;
+        Node left, right;
+
+        Node(String value) {
+            data = value;
+            left = right = null;
+        }
+    }
+
+    // Insert into BST (alphabetical order)
+    static Node insert(Node root, String value) {
+        if (root == null) {
+            return new Node(value);
+        }
+        if (value.compareToIgnoreCase(root.data) < 0) {
+            root.left = insert(root.left, value);
+        } else {
+            root.right = insert(root.right, value);
+        }
+        return root;
+    }
+
+    // Count nodes for BFS Queue size
+        static int countNodes(Node root) {
+            if (root == null) return 0;
+            return 1 + countNodes(root.left) + countNodes(root.right);
+        }
+
+    // Queue for BFS
+    static class ArrayQueue {
+        Node[] arr;
+        int front, rear, capacity;
+
+        ArrayQueue(int capacity) {
+            this.capacity = capacity;
+            arr = new Node[capacity];
+            front = rear = -1;
+        }
+
+        boolean isEmpty() { return front == -1; }
+
+        boolean isFull() { return (rear + 1) % capacity == front; }
+
+        void enqueue(Node node) {
+            if (isFull()) return;
+            if (isEmpty()) front = rear = 0;
+            else rear = (rear + 1) % capacity;
+            arr[rear] = node;
+        }
+
+        Node dequeue() {
+            if (isEmpty()) return null;
+            Node temp = arr[front];
+            if (front == rear) front = rear = -1;
+            else front = (front + 1) % capacity;
+            return temp;
+        }
+    }
+
+    // BFS Traversal
+    static void bfs(Node root) {
+        if (root == null) {
+            System.out.println("Tree is empty.");
+            return;
+        }
+
+        int totalNodes = countNodes(root);
+        ArrayQueue queue = new ArrayQueue(totalNodes);
+        queue.enqueue(root);
+
+        System.out.println("\nBFS Traversal (Names in Level Order):");
+
+        while (!queue.isEmpty()) {
+            Node current = queue.dequeue();
+            System.out.println(current.data + " ");
+
+            if (current.left != null) queue.enqueue(current.left);
+            if (current.right != null) queue.enqueue(current.right);
+        }
+        System.out.println("\n");
+    }
+
     /**
      * @param args the command line arguments
      */
@@ -164,7 +259,33 @@ public static String[] loadFullRecordsFromFile(String filename) {
                         }
                     break;
                 case 4:
-                    System.out.println("under construction");
+                    System.out.println("\n--- Create Binary Tree from File (Names Only) ---");
+                    System.out.print("Enter filename (with extension): ");
+
+                    String treeFile = scanner.nextLine();
+                    String[] recordsForTree = loadFullRecordsFromFile(treeFile);
+
+                    if (recordsForTree.length == 0) {
+                        System.out.println("File is empty or unreadable.");
+                        break;
+                    }
+
+                    // Build BST from Names (first column)
+                    Node rootTree = null;
+                    for (String rec : recordsForTree) {
+                        String name = rec.split(",")[0].trim();
+                        rootTree = insert(rootTree, name);
+                    }
+
+                    System.out.println("\nBinary Tree created successfully!");
+                    bfs(rootTree);
+
+                    int total = countNodes(rootTree);
+                    int h = height(rootTree);
+
+                    System.out.println("Total nodes in tree: " + total);
+                    System.out.println("Height of tree: " + h);
+
                     break;
                 case 5:
                     // Exit the program
